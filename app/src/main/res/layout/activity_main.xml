@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/id_main_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/weather"
+    tools:context=".MainActivity">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="8dp"
+        android:text="城市"
+        android:textColor="#FFFFFF"
+        android:layout_height="match_parent" />
+    <LinearLayout
+        android:id="@+id/id_ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="上海"
+            android:textColor="#e0e0e0"
+            android:textSize="24dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="昼夜为温差大，易发生感冒，请注意增减衣服"
+            android:maxLines="1"
+            android:textColor="#e0e0e0"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="3'C"
+            android:typeface="serif"
+            android:textStyle="bold"
+            android:textSize="40dp" />
+    </LinearLayout>
+</RelativeLayout>
