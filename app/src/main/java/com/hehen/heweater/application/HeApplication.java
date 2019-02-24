@@ -15,6 +15,6 @@ public class HeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         SPUtils.init(getApplicationContext(),"share_data.perf");
-        DatabaseHelper.init(getApplicationContext(),"he_wedb");
+        DatabaseHelper.init(getApplicationContext(),"he_wedb.db");
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hehen.heweater.bean.City;
+import com.hehen.heweater.bean.Weather;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -16,7 +17,7 @@ import java.sql.SQLException;
  * @Description: 用于封装获取database
  */
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
-    private  String dataName = "hen_wedb";
+    private  String dataName = "hen_wedb.db";
     private  Context context;
 
     private static DatabaseHelper instance = null;
@@ -46,6 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
            TableUtils.createTable(connectionSource, City.class);
+           TableUtils.createTable(connectionSource,Weather.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,6 +57,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.dropTable(connectionSource, City.class, true);
+            TableUtils.createTable(connectionSource,Weather.class);
 
             onCreate(database);
         } catch (SQLException e) {

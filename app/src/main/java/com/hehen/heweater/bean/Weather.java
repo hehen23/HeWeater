@@ -1,22 +1,38 @@
 package com.hehen.heweater.bean;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
+
 /**
  * @author chenping
  * @date 2019/2/24 12:24 AM
  * @Description:  天气实体类
  */
+@DatabaseTable(tableName = "tb_weather")
 public class Weather {
+    @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField
     private String date;
+    @DatabaseField
     private String hight;
+    @DatabaseField
     private String low;
+    @DatabaseField
     private String sunset;
+    @DatabaseField
     private String api;
+    @DatabaseField
     private String ymd;
+    @DatabaseField
     private String week;
+    @DatabaseField
     private String fx;
+    @DatabaseField
     private String f1;
+    @DatabaseField
     private String  type;
+    @DatabaseField
     private String notice;
 
     public Weather() {
