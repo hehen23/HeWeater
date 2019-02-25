@@ -27,5 +27,30 @@ public class Forecast implements Serializable {
         this.id = id;
     }
 
+    public Forecast(int id, Collection<Weather> forecast) {
+        this.id = id;
+        this.forecast = forecast;
+    }
 
+    public Forecast(Collection<Weather> forecast) {
+        this.forecast = forecast;
+    }
+
+    public Collection<Weather> getForecast() {
+        return forecast;
+    }
+
+    public void setForecast(Collection<Weather> forecast) {
+        this.forecast = forecast;
+    }
+
+    public Forecast() {
+    }
+    @Override
+    public String toString() {
+        return "Forecast{" +
+                "id=" + id +
+                ", forecast=" + forecast +
+                '}';
+    }
 }

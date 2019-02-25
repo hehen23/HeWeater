@@ -8,4 +8,6 @@ package com.hehen.heweater.config;
 public class Config {
     //本地是否已经存在省市数据
     public static  final  String CITY_KEY = "cityFlag";
+    public static final String INTENT_CITY_KEY = "CITY_KEY";
+    public static String base_url = "http://t.weather.sojson.com/api/weather/city/";
 }

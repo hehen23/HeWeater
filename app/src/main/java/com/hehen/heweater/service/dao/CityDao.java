@@ -56,14 +56,23 @@ public class CityDao {
         List<City> list;
         try {
             Dao<City,Integer> dao = getCityDao();
-            int id = city.getId();
-            Log.i(TAG, "findByCityList:id "+id);
+            int id  = city.getId();
             list = dao.queryForEq("pid",id);
-            Log.i(TAG, "findByCityList:size "+list.size());
             return list;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
         }
+    }
+    public  List<City> findAll() {
+        List<City> list = null;
+        try {
+            Dao<City,Integer> dao = getCityDao();
+            list = dao.queryForAll();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return list;
     }
 }

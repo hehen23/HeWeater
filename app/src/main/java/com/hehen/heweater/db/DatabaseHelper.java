@@ -8,6 +8,7 @@ import com.hehen.heweater.bean.CityInfo;
 import com.hehen.heweater.bean.CurrentWeather;
 import com.hehen.heweater.bean.Forecast;
 import com.hehen.heweater.bean.Weather;
+import com.hehen.heweater.bean.Yesterday;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -52,10 +53,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource, City.class);
-            TableUtils.createTable(connectionSource, Weather.class);
-            TableUtils.createTable(connectionSource, CurrentWeather.class);
-            TableUtils.createTable(connectionSource, CityInfo.class);
             TableUtils.createTable(connectionSource, Forecast.class);
+            TableUtils.createTable(connectionSource, Weather.class);
+            TableUtils.createTable(connectionSource,Forecast.class);
+            TableUtils.createTable(connectionSource,Yesterday.class);
+            TableUtils.createTable(connectionSource, CurrentWeather.class);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -65,10 +68,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.createTable(connectionSource, City.class);
-            TableUtils.createTable(connectionSource, Weather.class);
-            TableUtils.createTable(connectionSource, CurrentWeather.class);
-            TableUtils.createTable(connectionSource, CityInfo.class);
             TableUtils.createTable(connectionSource, Forecast.class);
+            TableUtils.createTable(connectionSource, Weather.class);
+            TableUtils.createTable(connectionSource,Forecast.class);
+            TableUtils.createTable(connectionSource,Yesterday.class);
+            TableUtils.createTable(connectionSource, CurrentWeather.class);
             onCreate(database);
         } catch (SQLException e) {
             e.printStackTrace();

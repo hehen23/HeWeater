@@ -1,17 +1,21 @@
 package com.hehen.heweater.utils;
 
 import com.hehen.heweater.bean.City;
+import com.hehen.heweater.bean.CurrentWeather;
+import com.hehen.heweater.bean.Weather;
 import com.hehen.heweater.config.Config;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * @author chenping
  * @date 2019/2/25 7:05 PM
- * @Description: 用户封装处理城市信息
+ * @Description: 数据持久工具类
  */
 public class DataUtils {
+    private CurrentWeather currentWeather;
+    //未来天气
+    private List<Weather> forecast;
     private   List<City> provinceList;  //省份
     private  List<City> cityList;  //市列表
     private  List<City> countyList; //县列表
@@ -42,12 +46,21 @@ public class DataUtils {
         return cityList;
     }
 
+    public List<Weather> getForecast() {
+        return forecast;
+    }
+
+    public void setForecast(List<Weather> forecast) {
+        this.forecast = forecast;
+    }
+    public boolean isDataNull() {
+        return dataNull;
+    }
     private List<City> getCountyList() {
         return countyList;
     }
     /**
      * 获取省分及直辖市
-     *
      * @return
      */
     public  List<City> getProvinces() {
@@ -64,4 +77,17 @@ public class DataUtils {
             //数据库中
         return getCityList();
     }
+    public List<City> getCountys() {
+        return getCountyList();
+    }
+
+    public CurrentWeather getCurrentWeather() {
+        return currentWeather;
+    }
+
+    public void setCurrentWeather(CurrentWeather currentWeather) {
+        this.currentWeather = currentWeather;
+    }
+
+
 }

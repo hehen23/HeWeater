@@ -63,4 +63,20 @@ public class CityService {
         List<City> list = cityDao.findByCityList(city);
         DataUtils.getInstance().setCityList(list);
     }
+    //查询所有数据
+    public List<City> getAll(){
+        cityDao =new CityDao();
+        return  cityDao.findAll();
+    }
+    //
+    //获取市
+    public void getCountys(City city) {
+        Log.i(TAG, "getCity: asdfjaks " + city);
+        cityDao = new CityDao();
+        if (city == null) {
+            return;
+        }
+        List<City> list = cityDao.findByCityList(city);
+        DataUtils.getInstance().setCountyList(list);
+    }
 }

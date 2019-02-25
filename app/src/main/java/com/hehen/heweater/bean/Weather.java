@@ -3,25 +3,27 @@ package com.hehen.heweater.bean;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.io.Serializable;
+
 /**
  * @author chenping
  * @date 2019/2/24 12:24 AM
  * @Description:  天气实体类
  */
 @DatabaseTable(tableName = "tb_weather")
-public class Weather {
+public class Weather implements Serializable {
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
     private String date;
     @DatabaseField
-    private String hight;
+    private String high;
     @DatabaseField
     private String low;
     @DatabaseField
     private String sunset;
     @DatabaseField
-    private String api;
+    private String aqi;
     @DatabaseField
     private String ymd;
     @DatabaseField
@@ -29,7 +31,7 @@ public class Weather {
     @DatabaseField
     private String fx;
     @DatabaseField
-    private String f1;
+    private String fl;
     @DatabaseField
     private String  type;
     @DatabaseField
@@ -38,79 +40,6 @@ public class Weather {
     private Forecast forecast;
     public Weather() {
     }
-    /**
-     *
-     * @param id
-     * @param date
-     * @param hight
-     * @param low
-     * @param sunset
-     * @param api
-     * @param ymd
-     * @param week
-     * @param fx
-     * @param f1
-     * @param type
-     * @param notice
-     */
-    public Weather(int id, String date, String hight, String low, String sunset,
-                   String api, String ymd, String week,
-                   String fx, String f1, String type, String notice) {
-        this.id = id;
-        this.date = date;
-        this.hight = hight;
-        this.low = low;
-        this.sunset = sunset;
-        this.api = api;
-        this.ymd = ymd;
-        this.week = week;
-        this.fx = fx;
-        this.f1 = f1;
-        this.type = type;
-        this.notice = notice;
-    }
-    /**
-     *
-     * @param id
-     * @param date
-     * @param hight
-     * @param low
-     * @param sunset
-     * @param api
-     * @param ymd
-     * @param week
-     * @param fx
-     * @param f1
-     * @param type
-     * @param notice
-     * @param forecast
-     */
-    public Weather(int id, String date, String hight, String low, String sunset,
-                   String api, String ymd, String week, String fx,
-                   String f1, String type, String notice, Forecast forecast) {
-        this.id = id;
-        this.date = date;
-        this.hight = hight;
-        this.low = low;
-        this.sunset = sunset;
-        this.api = api;
-        this.ymd = ymd;
-        this.week = week;
-        this.fx = fx;
-        this.f1 = f1;
-        this.type = type;
-        this.notice = notice;
-        this.forecast = forecast;
-    }
-
-    public Forecast getForecast() {
-        return forecast;
-    }
-
-    public void setForecast(Forecast forecast) {
-        this.forecast = forecast;
-    }
-
     public int getId() {
         return id;
     }
@@ -127,12 +56,12 @@ public class Weather {
         this.date = date;
     }
 
-    public String getHight() {
-        return hight;
+    public String getHigh() {
+        return high;
     }
 
-    public void setHight(String hight) {
-        this.hight = hight;
+    public void setHigh(String high) {
+        this.high = high;
     }
 
     public String getLow() {
@@ -151,12 +80,12 @@ public class Weather {
         this.sunset = sunset;
     }
 
-    public String getApi() {
-        return api;
+    public String getAqi() {
+        return aqi;
     }
 
-    public void setApi(String api) {
-        this.api = api;
+    public void setAqi(String aqi) {
+        this.aqi = aqi;
     }
 
     public String getYmd() {
@@ -183,12 +112,12 @@ public class Weather {
         this.fx = fx;
     }
 
-    public String getF1() {
-        return f1;
+    public String getFl() {
+        return fl;
     }
 
-    public void setF1(String f1) {
-        this.f1 = f1;
+    public void setFl(String fl) {
+        this.fl = fl;
     }
 
     public String getType() {
@@ -207,21 +136,29 @@ public class Weather {
         this.notice = notice;
     }
 
+    public Forecast getForecast() {
+        return forecast;
+    }
+
+    public void setForecast(Forecast forecast) {
+        this.forecast = forecast;
+    }
     @Override
     public String toString() {
         return "Weather{" +
                 "id=" + id +
                 ", date='" + date + '\'' +
-                ", hight='" + hight + '\'' +
+                ", high='" + high + '\'' +
                 ", low='" + low + '\'' +
                 ", sunset='" + sunset + '\'' +
-                ", api='" + api + '\'' +
+                ", aqi='" + aqi + '\'' +
                 ", ymd='" + ymd + '\'' +
                 ", week='" + week + '\'' +
                 ", fx='" + fx + '\'' +
-                ", f1='" + f1 + '\'' +
+                ", fl='" + fl + '\'' +
                 ", type='" + type + '\'' +
                 ", notice='" + notice + '\'' +
+                ", forecast=" + forecast +
                 '}';
     }
 }

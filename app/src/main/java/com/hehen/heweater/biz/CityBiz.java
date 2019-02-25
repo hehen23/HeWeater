@@ -38,6 +38,11 @@ public class CityBiz {
     private String url = "http://cdn.sojson.com/_city.json";
     private   String TAG = "CityBiz";
     public  void getCity() {
+        List<City> cache = service.getAll();
+        if(cache.size() >0){
+            //city城市只需要执行请求一次
+            return;
+        }
         CommonHttpClient.sendRequest(CommonReqeust.createGetReqeust(url, null), new CommonStringCallback(new DisposeDataHandle(new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
@@ -48,11 +53,11 @@ public class CityBiz {
             }
             @Override
             public void onFailure(Object responseObj) {
-                Log.i(TAG, "");
+                Log.i(TAG, "数据加载失败");
             }
         })));
     }
-    //获取省份信息x
+    //省
     public void getProvinces() {
         boolean flag = (boolean) SPUtils.getInstance().get(Config.CITY_KEY,Boolean.FALSE);
         if(flag){
@@ -60,10 +65,14 @@ public class CityBiz {
         }else{
             T.showToast("当前数据加载中，请稍片刻~");
         }
-
     }
-    //城市
+    //市
     public void getCitys(City city){
      service.getCity(city);
     }
+    //县级城市
+    public void getCountys(City city){
+        service.getCountys(city);
+    }
+
 }

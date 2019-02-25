@@ -1,8 +1,10 @@
 package com.hehen.heweater.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,9 +21,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hehen.heweater.MainActivity;
 import com.hehen.heweater.R;
 import com.hehen.heweater.bean.City;
 import com.hehen.heweater.biz.CityBiz;
+import com.hehen.heweater.config.Config;
 import com.hehen.heweater.utils.DataUtils;
 
 import java.util.ArrayList;
@@ -54,10 +58,8 @@ public class ProvincesFragment extends Fragment {
 
     private TextView title_text;
     private Button back_btn;
-
     private static int currentLevel = 0;  //默认等级省
     private List<String> dataList = new ArrayList<>();
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,41 +76,71 @@ public class ProvincesFragment extends Fragment {
         adapter.notifyDataSetChanged();
         return view;
     }
-
+    /**
+     * 选中城市返回首页
+     */
+    public void toMainActivity() {
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.putExtra(Config.INTENT_CITY_KEY, selecedCounty);  //选中城市
+        getActivity().setResult(Activity.RESULT_OK,intent);
+        getActivity().finish();
+    }
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //点击ListView
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(currentLevel == LEVEL_PROVINCE) {
-                    Log.i(TAG, "onItemClick: " + dataList.get(position));
+                if (currentLevel == LEVEL_PROVINCE) {
                     selecedProvince = provinceList.get(position);  //选中省份
-                    Log.i(TAG, "onItemClick: "+selecedProvince);
-                    //设置选中
-                    // queryProvince();
                     queryCity();
-                    currentLevel = 1;
-                    adapter.notifyDataSetChanged();
                 } else if (currentLevel == LEVEL_CITY) {
                     selecedCity = cityList.get(position);
                     queryCounty();
-                    Log.i(TAG, "onItemClick:省份 "+LEVEL_CITY + provinceList.get(position));
-                    adapter.notifyDataSetChanged();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    selecedCounty = countyList.get(position); //选中区域
+                    toMainActivity();  //返回首页
                 }
+                adapter.notifyDataSetChanged();
             }
         });
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //返回
+                if (currentLevel == LEVEL_COUNTY) {
+                    currentLevel = LEVEL_CITY;
+                    queryCity();
+                } else if (currentLevel == LEVEL_CITY) {
+                    currentLevel = LEVEL_PROVINCE;
+                    queryProvince();
+                } else {
+                    getActivity().finish();
+                }
+                adapter.notifyDataSetChanged();
             }
         });
-
+        queryProvince();
     }
-    private void queryCounty() {
 
+    private void queryCounty() {
+        currentLevel = LEVEL_COUNTY;
+        //获取县级数据
+        if (selecedCity != null) {
+            title_text.setText(selecedCity.getCity_name());
+        }
+        cityBiz.getCountys(selecedCity);
+        countyList = DataUtils.getInstance().getCountys();
+        //当前城市为空的则直接返回当前当前选中城市
+        if(countyList.isEmpty()){
+            selecedCounty = selecedCity;
+            toMainActivity();
+        }
+        dataList.clear();
+        for (City city : countyList) {
+            dataList.add(city.getCity_name());
+        }
     }
     //查询省份数据
     public void queryProvince() {
@@ -125,14 +157,14 @@ public class ProvincesFragment extends Fragment {
                 listView.setSelection(0);
             }
         }
+
         Toast.makeText(getContext(), "加载成功", Toast.LENGTH_SHORT).show();
     }
     //查询市级数据
     public void queryCity() {
+        currentLevel = LEVEL_CITY;
         cityBiz.getCitys(selecedProvince);
         cityList = DataUtils.getInstance().getCity();
-        Log.i(TAG, "queryCity: "+cityList);
-        Log.i(TAG, "queryCity: "+cityList);
         if (cityList == null) {
             return;
         }
@@ -143,6 +175,7 @@ public class ProvincesFragment extends Fragment {
                 dataList.add(city.getCity_name());
             }
         }
+        adapter.notifyDataSetChanged();
     }
     @Override
     public void onDestroy() {

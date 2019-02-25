@@ -28,6 +28,8 @@ public class CurrentWeather implements Serializable {
     private String quality;  //污染程度
     @DatabaseField
     private String wendu;  //温度
+    @DatabaseField(columnName = "yester_id",foreign = true,foreignAutoRefresh = true)
+    private Yesterday yesterday;
     @DatabaseField
     private String ganmao;  //提醒
     @DatabaseField(columnName = "city_id" ,foreign = true,foreignAutoCreate = true)
@@ -123,6 +125,16 @@ public class CurrentWeather implements Serializable {
 
     public void setForecast(Forecast forecast) {
         this.forecast = forecast;}
+    public CurrentWeather() {
+    }
+
+    public Yesterday getYesterday() {
+        return yesterday;
+    }
+
+    public void setYesterday(Yesterday yesterday) {
+        this.yesterday = yesterday;
+    }
 
     @Override
     public String toString() {
@@ -135,12 +147,10 @@ public class CurrentWeather implements Serializable {
                 ", pm10='" + pm10 + '\'' +
                 ", quality='" + quality + '\'' +
                 ", wendu='" + wendu + '\'' +
+                ", yesterday=" + yesterday +
                 ", ganmao='" + ganmao + '\'' +
                 ", cityInfo=" + cityInfo +
                 ", forecast=" + forecast +
                 '}';
-    }
-
-    public CurrentWeather() {
     }
 }
