@@ -38,7 +38,6 @@ public class Weather {
     private Forecast forecast;
     public Weather() {
     }
-
     /**
      *
      * @param id
@@ -70,7 +69,6 @@ public class Weather {
         this.type = type;
         this.notice = notice;
     }
-
     /**
      *
      * @param id
