@@ -1,4 +1,4 @@
-package com.hehen.heweater.application;
+package com.hehen.heweater.biz;
 
 import android.util.Log;
 
@@ -6,7 +6,10 @@ import com.bumptech.glide.load.HttpException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.hehen.heweater.bean.City;
+import com.hehen.heweater.config.Config;
 import com.hehen.heweater.service.CityService;
+import com.hehen.heweater.utils.SPUtils;
+import com.hehen.heweater.utils.T;
 import com.hehen.heweater.utils.okhttp.CommonHttpClient;
 import com.hehen.heweater.utils.okhttp.callback.CommonJsonCallback;
 import com.hehen.heweater.utils.okhttp.callback.CommonStringCallback;
@@ -41,14 +44,26 @@ public class CityBiz {
                 Gson gson = new Gson();
                 List<City> cities =  gson.fromJson((String) responseObj,new TypeToken<List<City>>(){}.getType());
                 Log.i(TAG, "onSuccess: "+cities);
-               service.addCitys(cities);
+                service.addCitys(cities);
             }
             @Override
             public void onFailure(Object responseObj) {
                 Log.i(TAG, "");
             }
         })));
+    }
+    //获取省份信息x
+    public void getProvinces() {
+        boolean flag = (boolean) SPUtils.getInstance().get(Config.CITY_KEY,Boolean.FALSE);
+        if(flag){
+            service.getPrivince();
+        }else{
+            T.showToast("当前数据加载中，请稍片刻~");
+        }
 
     }
-
+    //城市
+    public void getCitys(City city){
+     service.getCity(city);
+    }
 }

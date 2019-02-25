@@ -1,20 +1,18 @@
 package com.hehen.heweater;
 
-import android.app.DownloadManager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hehen.heweater.application.CityBiz;
+import com.hehen.heweater.biz.CityBiz;
 import com.hehen.heweater.db.DatabaseHelper;
 import com.hehen.heweater.utils.SPUtils;
 
 public class MainActivity extends AppCompatActivity {
     private CityBiz cityBiz;
     private TextView tv_city;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void toCityActivity() {
+         cityBiz.getProvinces();
+        //选中城市时，加载数据省份数据
         Intent intent = new Intent(MainActivity.this,CitysActivity.class);
         startActivityForResult(intent,2001);
     }
@@ -54,5 +54,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

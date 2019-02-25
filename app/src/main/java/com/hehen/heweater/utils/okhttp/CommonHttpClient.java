@@ -21,34 +21,38 @@ import okhttp3.Request;
 public class CommonHttpClient {
     private static final int TIME_OUT = 30; //超时时间
     private static OkHttpClient mHttpClient;
+
     //为我们的client设置参数
     static {
         OkHttpClient.Builder mOkHttpBuilder = new OkHttpClient.Builder();
         //为构建者填充超时时间
-        mOkHttpBuilder.connectTimeout(TIME_OUT,TimeUnit.SECONDS);
-        mOkHttpBuilder.readTimeout(TIME_OUT,TimeUnit.SECONDS);
-        mOkHttpBuilder.writeTimeout(TIME_OUT,TimeUnit.SECONDS);
+        mOkHttpBuilder.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
+        mOkHttpBuilder.readTimeout(TIME_OUT, TimeUnit.SECONDS);
+        mOkHttpBuilder.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
         //允许重定向
         mOkHttpBuilder.followRedirects(true);
         //支持https支持
-        mOkHttpBuilder.hostnameVerifier(new HostnameVerifier() {
-            @Override
-            public boolean verify(String hostname, SSLSession session) {
-                return true;
-            }
-        });
-      // mOkHttpBuilder.sslSocketFactory(HttpSSLUtil.getSslSoketFactory());
+//        mOkHttpBuilder.hostnameVerifier(new HostnameVerifier() {
+//            @Override
+//            public boolean verify(String hostname, SSLSession session) {
+//                return true;
+//            }
+//        });
+//        mOkHttpBuilder.sslSocketFactory(HttpSSLUtil.getSslSoketFactory());
         mHttpClient = mOkHttpBuilder.build();
     }
+
     /**
      * 用于发送https http请求
+     *
      * @param request
      * @param commonCallback
      * @return
      */
-    public static Call sendRequest(Request request, Callback commonCallback){
+    public static Call sendRequest(Request request, Callback commonCallback) {
         Call mCall = mHttpClient.newCall(request);
         mCall.enqueue(commonCallback);
         return mCall;
     }
+
 }

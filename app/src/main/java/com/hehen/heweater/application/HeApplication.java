@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.hehen.heweater.db.DatabaseHelper;
 import com.hehen.heweater.utils.SPUtils;
+import com.hehen.heweater.utils.T;
 
 /**
  * @author chenping
@@ -16,5 +17,6 @@ public class HeApplication extends Application {
         super.onCreate();
         SPUtils.init(getApplicationContext(),"share_data.perf");
         DatabaseHelper.init(getApplicationContext(),"he_wedb.db");
+        T.init(getApplicationContext());
     }
 }
