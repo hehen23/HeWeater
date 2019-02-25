@@ -37,7 +37,7 @@ public class CommonHttpClient {
                 return true;
             }
         });
-        mOkHttpBuilder.sslSocketFactory(HttpSSLUtil.getSslSoketFactory());
+      // mOkHttpBuilder.sslSocketFactory(HttpSSLUtil.getSslSoketFactory());
         mHttpClient = mOkHttpBuilder.build();
     }
     /**

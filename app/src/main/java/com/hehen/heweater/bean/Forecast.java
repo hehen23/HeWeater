@@ -19,7 +19,6 @@ public class Forecast implements Serializable {
     private int id;
     @ForeignCollectionField(columnName = "weather_id")
     private Collection<Weather> forecast;
-
     public int getId() {
         return id;
     }

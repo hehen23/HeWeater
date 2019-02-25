@@ -6,4 +6,5 @@ package com.hehen.heweater.utils.okhttp.reponse;
  * @Description:  解析参数
  */
 public class ResponseEctityToModule {
+    //解析city
 }

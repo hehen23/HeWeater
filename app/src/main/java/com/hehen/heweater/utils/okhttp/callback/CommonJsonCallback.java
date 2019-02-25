@@ -96,6 +96,7 @@ public class CommonJsonCallback implements Callback {
                 //从json对象中取出我们的响应吗,若为0，则正确响应
                 if (result.getInt(RESULT_CODE) == RESULT_CODE_VALUE) {
                     if(mClass == null) {
+                        //未设置mCLass则直接对调
                         mListener.onSuccess(resultObj);
                     }else{
                         //TODO 即需要我们将json对象转换为实体对象

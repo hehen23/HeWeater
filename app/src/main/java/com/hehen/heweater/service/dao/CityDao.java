@@ -2,6 +2,7 @@ package com.hehen.heweater.service.dao;
 
 import com.hehen.heweater.bean.City;
 import com.hehen.heweater.db.DatabaseHelper;
+import com.hehen.heweater.utils.SPUtils;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -23,7 +24,10 @@ public class CityDao {
     public void insertCity(List<City> cities){
         try {
             Dao<City,Integer> cityIntegerDao = getCityDao();
-           cityIntegerDao.create(cities);
+          int count =   cityIntegerDao.create(cities);
+          if(count>0){
+              SPUtils.getInstance().put("cityFlag",true);
+          }
         } catch (SQLException e) {
             e.printStackTrace();
         }

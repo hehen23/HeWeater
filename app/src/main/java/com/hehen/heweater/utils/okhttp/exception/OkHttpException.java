@@ -7,7 +7,6 @@ package com.hehen.heweater.utils.okhttp.exception;
  * @function "自定义异常类"
  */
 public class OkHttpException  extends Exception{
-
     /**
      * 异常码
      */
