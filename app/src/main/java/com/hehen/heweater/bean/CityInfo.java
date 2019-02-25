@@ -1,9 +1,12 @@
 package com.hehen.heweater.bean;
 
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.io.Serializable;
+import java.util.Collection;
+
 
 /**
  * @author chenping
@@ -23,6 +26,8 @@ public class CityInfo  implements Serializable {
     private String parent;
     @DatabaseField
     private String updateTime;
+    @ForeignCollectionField
+    private Collection<CurrentWeather> weathers;
 
     public int getCity_id() {
         return city_id;

@@ -34,10 +34,29 @@ public class Weather {
     private String  type;
     @DatabaseField
     private String notice;
-
+    @DatabaseField(columnName = "forecast_id" ,foreignAutoRefresh = true,foreign = true)
+    private Forecast forecast;
     public Weather() {
     }
-    public Weather(int id, String date, String hight, String low, String sunset, String api, String ymd, String week, String fx, String f1, String type, String notice) {
+
+    /**
+     *
+     * @param id
+     * @param date
+     * @param hight
+     * @param low
+     * @param sunset
+     * @param api
+     * @param ymd
+     * @param week
+     * @param fx
+     * @param f1
+     * @param type
+     * @param notice
+     */
+    public Weather(int id, String date, String hight, String low, String sunset,
+                   String api, String ymd, String week,
+                   String fx, String f1, String type, String notice) {
         this.id = id;
         this.date = date;
         this.hight = hight;
@@ -50,6 +69,48 @@ public class Weather {
         this.f1 = f1;
         this.type = type;
         this.notice = notice;
+    }
+
+    /**
+     *
+     * @param id
+     * @param date
+     * @param hight
+     * @param low
+     * @param sunset
+     * @param api
+     * @param ymd
+     * @param week
+     * @param fx
+     * @param f1
+     * @param type
+     * @param notice
+     * @param forecast
+     */
+    public Weather(int id, String date, String hight, String low, String sunset,
+                   String api, String ymd, String week, String fx,
+                   String f1, String type, String notice, Forecast forecast) {
+        this.id = id;
+        this.date = date;
+        this.hight = hight;
+        this.low = low;
+        this.sunset = sunset;
+        this.api = api;
+        this.ymd = ymd;
+        this.week = week;
+        this.fx = fx;
+        this.f1 = f1;
+        this.type = type;
+        this.notice = notice;
+        this.forecast = forecast;
+    }
+
+    public Forecast getForecast() {
+        return forecast;
+    }
+
+    public void setForecast(Forecast forecast) {
+        this.forecast = forecast;
     }
 
     public int getId() {

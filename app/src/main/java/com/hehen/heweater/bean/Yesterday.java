@@ -11,7 +11,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "tb_yesterday")
 public class Yesterday {
     private int id;
-    @DatabaseField(columnName = "weather_id")
+    @DatabaseField(columnName = "weather_id",foreign = true,foreignAutoCreate = true)
     private Weather weather;
 
 }
