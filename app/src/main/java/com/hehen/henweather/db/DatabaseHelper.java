@@ -1,11 +1,15 @@
 package com.hehen.henweather.db;
 
+import android.content.ContentUris;
 import android.content.Context;
 import android.database.DatabaseErrorHandler;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.hehen.henweather.bean.City;
+import com.hehen.henweather.bean.CurrentWeather;
+import com.hehen.henweather.bean.Forecast;
+import com.hehen.henweather.bean.Weather;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -47,6 +51,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
         try {
             TableUtils.createTable(connectionSource,City.class);
+
+            TableUtils.createTable(connectionSource,Weather.class);
+            TableUtils.createTable(connectionSource,Forecast.class);
+            TableUtils.createTable(connectionSource,CurrentWeather.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -56,6 +64,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
         try {
             TableUtils.createTable(connectionSource,City.class);
+            TableUtils.createTable(connectionSource,Weather.class);
+            TableUtils.createTable(connectionSource,Forecast.class);
+            TableUtils.createTable(connectionSource,CurrentWeather.class);
             onCreate(database);
         } catch (SQLException e) {
             e.printStackTrace();

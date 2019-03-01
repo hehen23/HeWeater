@@ -2,6 +2,8 @@ package com.hehen.henweather.dao;
 
 import com.hehen.henweather.bean.City;
 import com.hehen.henweather.db.DatabaseHelper;
+import com.hehen.henweather.utils.Config;
+import com.hehen.henweather.utils.data.DataUtils;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
@@ -24,7 +26,12 @@ public class CityDao {
     public Integer addAll(List<City> cities) {
         Integer count = null;
         try {
+            if (getDao().queryForAll() != null && getDao().queryForAll().size() > 0) {
+                DataUtils.setCitys(cities);
+                return getDao().queryForAll().size();
+            }
             count = getDao().create(cities);
+            DataUtils.put(Config.CITY_LIST, cities);
         } catch (SQLException e) {
             e.printStackTrace();
         }

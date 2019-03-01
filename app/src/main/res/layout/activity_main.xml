@@ -1,12 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/weather"
+    android:orientation="vertical">
+
     <TextView
-        android:id="@+id/id_tv_text"
+        android:id="@+id/id_tv_switchCity"
         android:layout_width="wrap_content"
-        android:text="天气"
-        android:layout_gravity="center"
-        android:textSize="60dp"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="切换城市"
+        android:textColor="#FFF"
+        android:textSize="18dp" />
+    <LinearLayout
+        android:id="@+id/id_current_box"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/id_tv_cityname"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="30dp"
+            tools:text="北京" />
+
+        <TextView
+            android:id="@+id/id_tv_notice"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="#FFF"
+            android:textSize="16sp"
+            tools:text="极少数敏感人群应减少户外活动" />
+
+        <TextView
+            android:id="@+id/id_tv_wendu"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:textSize="40dp"
+            tools:text="23 ℃" />
+    </LinearLayout>
+    <ListView
+        android:id="@+id/id_lt_forecast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_current_box"></ListView>
+</RelativeLayout>

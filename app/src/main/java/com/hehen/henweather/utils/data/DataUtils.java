@@ -3,6 +3,7 @@ package com.hehen.henweather.utils.data;
 import android.util.Log;
 
 import com.hehen.henweather.bean.City;
+import com.hehen.henweather.utils.Config;
 import com.hehen.henweather.utils.other.T;
 
 import java.util.ArrayList;
@@ -19,8 +20,7 @@ import static android.content.ContentValues.TAG;
  */
 public class DataUtils {
     private static Map<String, Object> cache = new ConcurrentHashMap<>();
-    private static List<City> mCity = new ArrayList<>();  //所有的城市
-
+    public  static List<City> mCity = new ArrayList<>();  //所有的城市
     public static List<City> mProvince = new ArrayList<>();  //省份
     public static List<City> mCities = new ArrayList<>();   //市
     public static List<City> mCounty = new ArrayList<>(); //县/区
@@ -40,12 +40,16 @@ public class DataUtils {
     }
 
     public static void put(String key, Object value) {
-        if (key == null && key.equals("")) {
+        Log.i(TAG, "put: key = "+key+"\tvalue = "+value);
+        if (null == key && key.equals("")) {
             throw new IllegalArgumentException("key is null");
         }
         cache.put(key, value);
     }
-
+    /**
+     * 设置所有的 City
+     * @param citys
+     */
     public static void setCitys(List<City> citys) {
         if (citys == null && citys.isEmpty()) {
             return;
@@ -53,12 +57,9 @@ public class DataUtils {
         mCity.addAll(citys);
     }
 
-    public Object get(String key, Object o) {
-        Object obj = cache.get(key);
-        if (obj == null) {
-            throw new IllegalArgumentException("Object is keyspace");
-        }
-        return obj;
+
+    public static Object get(String key) {
+        return cache.get(key);
     }
 
     public static Map<String, Object> getCache() {
@@ -73,7 +74,6 @@ public class DataUtils {
         mCounty.clear();
         mCounty.addAll(county);
     }
-
     public static void setCities(List<City> cities) {
         if (cities == null && cities.isEmpty()) {
             T.showToast("城市数据获取失败");
@@ -82,7 +82,6 @@ public class DataUtils {
         mCities.clear();
         mCities.addAll(cities);
     }
-
     public static void setProvince(List<City> province) {
         Log.i(TAG, "setProvince: " + province);
         mProvince.clear();

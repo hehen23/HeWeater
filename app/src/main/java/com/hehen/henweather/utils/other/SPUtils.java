@@ -80,7 +80,6 @@ public class SPUtils {
     public Object get(String key, Object defaultObject) {
         SharedPreferences sp = mCtx.getSharedPreferences(mFileName,
                 Context.MODE_PRIVATE);
-
         if (defaultObject instanceof String) {
             return sp.getString(key, (String) defaultObject);
         } else if (defaultObject instanceof Integer) {

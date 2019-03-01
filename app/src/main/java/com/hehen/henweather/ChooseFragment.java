@@ -1,5 +1,6 @@
 package com.hehen.henweather;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import com.hehen.henweather.bean.City;
 import com.hehen.henweather.biz.CityBiz;
+import com.hehen.henweather.utils.Config;
 import com.hehen.henweather.utils.data.DataUtils;
 
 import java.util.ArrayList;
@@ -31,12 +33,7 @@ import static android.content.ContentValues.TAG;
  */
 public class ChooseFragment extends Fragment {
     public static final String KEY_SELECED_CITY = "key_selecedCity";
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        biz.initLoad();
-    }
+    private ProgressDialog progressDialog;
 
     private static final int LEVEL_PROVINCE = 0;
     private static final int LEVEL_CITY = 1;
@@ -84,23 +81,48 @@ public class ChooseFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selecedCity = cityList.get(position);
                     queryCounty();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    selecedCounty = countyList.get(position);
+                    DataUtils.put(Config.KEY_SELECED_CITY, selecedCounty);
+                    toResultMainActivity();
                 }
             }
         });
-        if (currentLevel == LEVEL_PROVINCE) queryProvince();
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentLevel == LEVEL_CITY) {
+                    currentLevel = LEVEL_PROVINCE;
+                    queryProvince();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    currentLevel = LEVEL_CITY;
+                    queryCity();
+                } else if (currentLevel == LEVEL_PROVINCE) {
+                    getActivity().finish();
+                }
+            }
+        });
+        queryProvince();
     }
-
+    /**
+     * 启动首页
+     */
     private void toResultMainActivity() {
-        getActivity().setResult(2003);
+        Intent intent = new Intent(getContext(), MainActivity.class);
+        intent.putExtra("key_citys", selecedCity);
+        getActivity().setResult(2003, intent);
         getActivity().finish();
     }
 
     private void queryProvince() {
         title_text.setText("中国");
         currentLevel = LEVEL_PROVINCE;
-        if (DataUtils.mProvince == null || DataUtils.mProvince.isEmpty()) {
+        if (null == DataUtils.mProvince || DataUtils.mProvince.isEmpty()) {
+            showProgressDialog();
             //数据库中获取
+            biz.initLoad();
             List<City> cities = biz.getProvince();
+            stopProgressDialog();
             if (cities != null) {
                 provinceList.clear();
                 provinceList.addAll(cities);
@@ -110,6 +132,7 @@ public class ChooseFragment extends Fragment {
             provinceList.addAll(DataUtils.mProvince);
             Log.i(TAG, "queryProvince: " + DataUtils.mProvince);
         }
+
         dataList.clear();
         for (City city : provinceList) {
             dataList.add(city.getCity_name());
@@ -117,17 +140,21 @@ public class ChooseFragment extends Fragment {
         }
         adapter.notifyDataSetChanged();
     }
+
     private void queryCounty() {
         currentLevel = LEVEL_COUNTY;
         title_text.setText(selecedCity.getCity_name());
         List<City> list = biz.getCount(selecedCity);
-        if (list != null || !list.isEmpty()) {
-            countyList.clear();
-            countyList.addAll(list);
-            dataList.clear();
-            for (City city : countyList) {
-                dataList.add(city.getCity_name());
-            }
+        if (null == list || list.isEmpty()) {
+            DataUtils.put(Config.KEY_SELECED_CITY, selecedCity);
+            toResultMainActivity();
+            return;
+        }
+        countyList.clear();
+        countyList.addAll(list);
+        dataList.clear();
+        for (City city : countyList) {
+            dataList.add(city.getCity_name());
         }
         adapter.notifyDataSetChanged();
     }
@@ -136,15 +163,42 @@ public class ChooseFragment extends Fragment {
         currentLevel = LEVEL_CITY;
         title_text.setText(selecedProvince.getCity_name());
         List<City> list = biz.getcities(selecedProvince);
-        if (list != null) {
+        if (null != list) {
             cityList.clear();
             cityList.addAll(list);
             dataList.clear();
             for (City city : list) {
                 dataList.add(city.getCity_name());
             }
+        } else {
+            DataUtils.put(Config.KEY_SELECED_CITY, selecedCity);
+            toResultMainActivity();
         }
         adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+    protected void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("加载中...");
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.show();
+    }
+
+    protected void stopProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopProgressDialog();
     }
 }
