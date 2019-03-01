@@ -57,15 +57,12 @@ public class DataUtils {
         mCity.addAll(citys);
     }
 
-
     public static Object get(String key) {
         return cache.get(key);
     }
-
     public static Map<String, Object> getCache() {
         return cache;
     }
-
     public static void setCounty(List<City> county) {
         if (county == null && county.isEmpty()) {
             T.showToast("数据初始化失败!");

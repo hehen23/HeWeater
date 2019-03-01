@@ -117,22 +117,22 @@ public class ChooseFragment extends Fragment {
     private void queryProvince() {
         title_text.setText("中国");
         currentLevel = LEVEL_PROVINCE;
-        if (null == DataUtils.mProvince || DataUtils.mProvince.isEmpty()) {
-            showProgressDialog();
+        if (null == DataUtils.mProvince | DataUtils.mProvince.isEmpty()) {
             //数据库中获取
+            showProgressDialog();
             biz.initLoad();
-            List<City> cities = biz.getProvince();
             stopProgressDialog();
+            List<City> cities = biz.getProvince();
             if (cities != null) {
                 provinceList.clear();
                 provinceList.addAll(cities);
             }
+            adapter.notifyDataSetChanged();
         } else {
             provinceList.clear();
             provinceList.addAll(DataUtils.mProvince);
             Log.i(TAG, "queryProvince: " + DataUtils.mProvince);
         }
-
         dataList.clear();
         for (City city : provinceList) {
             dataList.add(city.getCity_name());
@@ -180,6 +180,7 @@ public class ChooseFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        biz.getProvince();
 
     }
     protected void showProgressDialog() {

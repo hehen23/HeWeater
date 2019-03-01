@@ -7,6 +7,7 @@ import com.hehen.henweather.utils.data.DataUtils;
 import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +23,6 @@ public class CityDao {
     public Dao<City, Integer> getDao() throws SQLException {
         return getHelper().getDao(City.class);
     }
-
     public Integer addAll(List<City> cities) {
         Integer count = null;
         try {
@@ -38,9 +38,9 @@ public class CityDao {
         return count;
     }
     public List<City> findByPid(int id) {
-        List<City> cities = null;
+        List<City> cities = new ArrayList<>();
         try {
-            cities = getDao().queryForEq("pid", id);
+            cities.addAll(getDao().queryForEq("pid", id));
         } catch (SQLException e) {
             e.printStackTrace();
         }

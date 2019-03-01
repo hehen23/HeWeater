@@ -25,12 +25,10 @@ public class CurrentWeather implements Serializable {
     private String wendu;
     @DatabaseField
     private String ganmao;
-    @DatabaseField(dataType = DataType.SERIALIZABLE, columnName = "forecast_id", foreign = true, foreignAutoRefresh = true, foreignAutoCreate = true)
-    Forecast forecast;
+
     public String getPm25() {
         return pm25;
     }
-
     public void setPm25(String pm25) {
         this.pm25 = pm25;
     }
@@ -67,12 +65,6 @@ public class CurrentWeather implements Serializable {
         this.ganmao = ganmao;
     }
 
-    public Forecast getForecast() {
-        return forecast;
-    }
-    public void setForecast(Forecast forecast) {
-        this.forecast = forecast;
-    }
     public String getCity_code() {
         return city_code;
     }

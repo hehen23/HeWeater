@@ -17,6 +17,11 @@ import java.util.Collection;
 public class Forecast implements Serializable {
     @DatabaseField(generatedId = true)
     private int id;
+    @DatabaseField
+    private String city_code;
+
+
+
     @ForeignCollectionField
     private Collection<Weather> weathers;
     public int getId() {
@@ -30,6 +35,13 @@ public class Forecast implements Serializable {
     }
     public void setWeathers(Collection<Weather> weathers) {
         this.weathers = weathers;
+    }
+    public String getCity_code() {
+        return city_code;
+    }
+
+    public void setCity_code(String city_code) {
+        this.city_code = city_code;
     }
 
 }

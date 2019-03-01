@@ -19,6 +19,7 @@ import com.hehen.henweather.utils.other.GsonUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
 import java.util.List;
 
 import okhttp3.Call;
@@ -35,6 +36,12 @@ public class WeatherBiz {
     private String base_url = "http://t.weather.sojson.com/api/weather/city/";
 
     public void Load(final String city_code, final WeatherBack weatherBack) {
+          //查询本地是否存在数据
+        dao.getWeather(city_code);
+        if(null != DataUtils.get("weathers")&&null!=DataUtils.get("currentWeather")){
+            weatherBack.onSourcess((List<Weather>) DataUtils.get("weathers"),(CurrentWeather) DataUtils.get("currentWeather"));
+            return;
+        }
         StringBuilder builder = new StringBuilder(base_url);
         builder.append(city_code);
         Call call = HttpUtils.sendRequest(CommonRequest.createRequestGet(builder.toString(), null), new StringCallback() {
@@ -42,7 +49,6 @@ public class WeatherBiz {
             public void onError(Exception e) {
                 weatherBack.onFail(e.getMessage());
             }
-
             @Override
             public void onSuccess(String body) {
                 Log.i(TAG, "onSuccess: " + body);
@@ -63,6 +69,7 @@ public class WeatherBiz {
                     String weathJson = datas.getString("yesterday");
                     Weather weather = GsonUtils.getGson().fromJson(weathJson, Weather.class);
 //                     currentWeather.setYesterday(weather);
+                    Log.i(TAG, "onSuccess: "+list);
                     dao.add(list, currentWeather);
                     weatherBack.onSourcess(list, currentWeather);
                 } catch (JSONException e) {
@@ -74,7 +81,6 @@ public class WeatherBiz {
 
     public interface WeatherBack {
         void onSourcess(List<Weather> weathers, CurrentWeather currentWeather);
-
         void onFail(String msg);
     }
 
