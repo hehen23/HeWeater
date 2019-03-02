@@ -46,4 +46,8 @@ public class CityDao {
         }
         return cities;
     }
+    public List<City> getAll() throws SQLException {
+            return getDao().queryForAll();
+
+    }
 }

@@ -2,6 +2,7 @@ package com.hehen.henweather;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -20,11 +21,13 @@ import com.hehen.henweather.bean.Weather;
 import com.hehen.henweather.biz.CityBiz;
 import com.hehen.henweather.biz.WeatherBiz;
 import com.hehen.henweather.utils.Config;
+import com.hehen.henweather.utils.PermissionUtils;
 import com.hehen.henweather.utils.data.DataUtils;
 import com.hehen.henweather.utils.other.SPUtils;
 import com.hehen.henweather.utils.other.T;
 import com.j256.ormlite.stmt.query.In;
 
+import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -59,12 +62,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         initEvent();
+
+        final PermissionUtils permissionUtils = new PermissionUtils(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            permissionUtils.requeryPermission(DataUtils.getPermission(), 2001, new PermissionUtils.Callback() {
+                @Override
+                public void grantAll() {
+                    initData();
+                }
+
+                @Override
+                public void denied() {
+                    permissionUtils.showDialogSetting();
+                }
+            });
+        }
         initData();
     }
 
     private void initData() {
         //  toChooeseActivity();
         //弹出对话框：
+        showProgressDialog();
         final String city_name = (String) SPUtils.getInstance().get("def_city_name", " ");
         String def_city_code = (String) SPUtils.getInstance().get("def_city_code", " ");
         if (city_name != null && !city_name.equals(" ")) {
@@ -182,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 //                            });
                             Message message =Message.obtain();
                             message.what = 2001;
-                            handler.sendMessageDelayed(message,1000);
+                            handler.sendMessageDelayed(message,500);
                         }
                         @Override
                         public void onFail(String msg) {

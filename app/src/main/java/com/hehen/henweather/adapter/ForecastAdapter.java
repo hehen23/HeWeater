@@ -70,7 +70,6 @@ public class ForecastAdapter extends ArrayAdapter<Weather> {
 
         return convertView;
     }
-
     public class ViewHoler {
         public  TextView tv_week;  //星期几
         public ImageView iv_icon;  //天气状况图片

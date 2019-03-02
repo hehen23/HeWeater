@@ -1,5 +1,7 @@
 package com.hehen.henweather.utils.data;
 
+import android.Manifest;
+import android.support.v4.content.PermissionChecker;
 import android.util.Log;
 
 import com.hehen.henweather.bean.City;
@@ -24,7 +26,7 @@ public class DataUtils {
     public static List<City> mProvince = new ArrayList<>();  //省份
     public static List<City> mCities = new ArrayList<>();   //市
     public static List<City> mCounty = new ArrayList<>(); //县/区
-
+    public static List<String> permission = new ArrayList<>();
     public static final String KEY_PROVINCE = "key_province";
     public static final String KEY_CITY = "key_city";
     public static final String KEY_COUNTY = "key_county";
@@ -51,6 +53,7 @@ public class DataUtils {
      * @param citys
      */
     public static void setCitys(List<City> citys) {
+        mCity.clear();
         if (citys == null && citys.isEmpty()) {
             return;
         }
@@ -80,9 +83,19 @@ public class DataUtils {
         mCities.addAll(cities);
     }
     public static void setProvince(List<City> province) {
-        Log.i(TAG, "setProvince: " + province);
+       // Log.i(TAG, "setProvince: " + province);
         mProvince.clear();
         mProvince.addAll(province);
-        Log.i(TAG, "setProvince: " + mProvince);
+     //  Log.i(TAG, "setProvince: " + mProvince);
+    }
+    public  void PermissionList(){
+        permission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permission.add(Manifest.permission.INTERNET);
+        permission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        permission.add(Manifest.permission.CAMERA);
+        permission.add(Manifest.permission.CHANGE_NETWORK_STATE);
+    }
+    public static List<String> getPermission(){
+        return  permission;
     }
 }

@@ -102,8 +102,11 @@ public class ChooseFragment extends Fragment {
                 }
             }
         });
+        showProgressDialog();
         queryProvince();
+        stopProgressDialog();
     }
+
     /**
      * 启动首页
      */
@@ -115,30 +118,30 @@ public class ChooseFragment extends Fragment {
     }
 
     private void queryProvince() {
+        showProgressDialog();
         title_text.setText("中国");
         currentLevel = LEVEL_PROVINCE;
         if (null == DataUtils.mProvince | DataUtils.mProvince.isEmpty()) {
             //数据库中获取
-            showProgressDialog();
             biz.initLoad();
-            stopProgressDialog();
             List<City> cities = biz.getProvince();
             if (cities != null) {
                 provinceList.clear();
                 provinceList.addAll(cities);
             }
-            adapter.notifyDataSetChanged();
         } else {
             provinceList.clear();
             provinceList.addAll(DataUtils.mProvince);
             Log.i(TAG, "queryProvince: " + DataUtils.mProvince);
         }
         dataList.clear();
+        stopProgressDialog();
         for (City city : provinceList) {
             dataList.add(city.getCity_name());
             Log.i(TAG, "queryProvince: 来这里了么？？？");
         }
         adapter.notifyDataSetChanged();
+        listView.deferNotifyDataSetChanged();
     }
 
     private void queryCounty() {
@@ -183,6 +186,7 @@ public class ChooseFragment extends Fragment {
         biz.getProvince();
 
     }
+
     protected void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(getActivity());
@@ -197,6 +201,7 @@ public class ChooseFragment extends Fragment {
             progressDialog.dismiss();
         }
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
